@@ -3,6 +3,7 @@ import sys
 import json
 import calendar
 import requests
+import re
 from datetime import date
 Error404 = 'Ups.. Parece que te haz equivocado, vamos a intentarlo de nuevo. '
 calendario = []
@@ -101,8 +102,7 @@ def VerCalendario():
 def ModificarDias():
     Clean()
     print(calendar.calendar(current_year))
-    # month = int(input('Ingresa un mes (1 al 12) '))
-    month = 5 # Recordar cambiar
+    month = int(input('Ingresa un mes (1 al 12) '))
     Clean()
     if month <= 12:
         temp_month = calendar.month(current_year, month)
@@ -110,42 +110,23 @@ def ModificarDias():
         entry = input('Ingresa los dias que viajaras separados por un espacio')
         entry = entry.split(' ')
         Clean()
-        j = 0
-        while j < len(entry):
-            i = 25
-            while i < len(temp_month):
-                if (i + 1) < len(temp_month):
-                    if temp_month[i] + temp_month[i + 1] == str(entry[j]):
-                        temp_month_list = list(temp_month)
-                        temp_month_list[i] = " "
-                        temp_month_list[i + 1] = "X"
-                        temp_month = "".join(temp_month_list)
-                        print('A')
-                        print(entry[j])
-                        i += len(temp_month) - 1
-                    elif temp_month[i] == str(entry[j]) and temp_month[i + 1] == ' ':
-                        temp_month_list = list(temp_month)
-                        temp_month_list[i] = "X"
-                        temp_month = "".join(temp_month_list)
-                        print('B')
-                        print(entry[j])
-                        print(temp_month[i])
-                        i += len(temp_month) - 1
-                    else:
-                        i += 1
-                else:
-                    if temp_month[i] == str(entry[j]) and temp_month[i - 1] == ' ':
-                        temp_month_list = list(temp_month)
-                        temp_month_list[i] = "X"
-                        temp_month = "".join(temp_month_list)
-                        print('C')
-                        print(entry[j])
-                        i += len(temp_month) - 1
-                    else:
-                        i += 1
-                i += 1
-            j += 1
-        print(entry)
+        Pos = []
+        Nmbr = []
+        for r in re.finditer('\d+', temp_month):
+            Nmbr.append(r.group(0))
+            Pos.append(r.start())
+        Nmbr.pop(0)
+        Pos.pop(0)
+        i = 0
+        while i < len(entry):
+            j = 0
+            while j < len(Nmbr):
+                if Nmbr[j] == entry[i]:
+                    temp_month_list = list(temp_month)
+                    temp_month_list[int(Pos[j])] = 'X'
+                    temp_month = ''.join(temp_month_list)
+                j += 1
+            i += 1
         print(temp_month)
     else:
         print(Error404)
