@@ -123,11 +123,19 @@ def ModificarDias():
             while j < len(Nmbr):
                 if Nmbr[j] == entry[i]:
                     temp_month_list = list(temp_month)
-                    temp_month_list[int(Pos[j])] = 'X'
-                    temp_month = ''.join(temp_month_list)
+                    if  len(entry[i]) == 1:
+                        temp_month_list[int(Pos[j])] = 'X'
+                        temp_month = ''.join(temp_month_list)
+                    elif len(entry[i]) == 2:
+                        temp_month_list[int(Pos[j])] = ' '
+                        temp_month_list[int(Pos[j]) + 1] = 'X'
+                        temp_month = ''.join(temp_month_list)
+                    else:
+                        j += 1
                 j += 1
             i += 1
         print(temp_month)
+        Consulta()
     else:
         print(Error404)
         ModificarDias()
