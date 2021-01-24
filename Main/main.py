@@ -12,7 +12,10 @@ import matplotlib.pyplot as plt
 
 
 def Clean():
-    os.system("cls")
+    if os.name == 'posix':
+        os.system('clear')
+    elif os.name == ('ce', 'nt', 'dos'):
+        os.system('cls')
 
 
 def Exit():
@@ -102,15 +105,15 @@ def Menu():
              \r(4)  Ver grafico
              \r(5)  Exit''')
     temp = input('Que opcion deseas? ')
-    if temp == "1":
+    if temp == '1':
         DiasFeriados()
-    elif temp == "2":
+    elif temp == '2':
         VerCalendario()
-    elif temp == "3":
+    elif temp == '3':
         Calculadora()
-    elif temp == "4":
+    elif temp == '4':
         Grafico()
-    elif temp == "5":
+    elif temp == '5':
         Clean()
         print('Adios')
         Exit()
@@ -152,7 +155,7 @@ def Calculadora():
             j += 1
         Pos = []
         Nmbr = []
-        for r in re.finditer('\d+', temp_month):
+        for r in re.finditer(r'\d+', temp_month):
             Nmbr.append(r.group(0))
             Pos.append(r.start())
         Nmbr.pop(0)
@@ -219,8 +222,6 @@ def Grafico():
         etiquetas.append(temp[i][0])
         valores.append(int(temp[i][1]))
         i += 1
-    print(etiquetas)
-    print(valores)
     posiciones = np.arange(len(etiquetas))
     plt.bar(posiciones, valores, alpha=1.0, width=0.5)
     plt.xticks(posiciones, etiquetas)
@@ -242,3 +243,84 @@ current_year = 2020  # date.today().year
 if __name__ == '__main__':
     Menu()
 # EL PROGRAMA NO TIENE SALIDA, PUES LA FUNCION ESTA PREDEFINIDA
+
+
+#########################
+# BLOQUE DE COMENTARIOS #
+#########################
+
+
+# En caso de necesitar instalacion de algun modulo se adjunta documentacion
+# Cabe destacar que para la instalacion de las librerias se utilizara pip
+# pip --> package management system
+
+# Windows --> python get-pip.py
+# macOS or OS X --> curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+
+# os --> Libreria estandar sin necesidad de installacion
+# https://docs.python.org/es/3/library/os.html
+
+# sys --> Libreria estandar sin necesidad de installacion
+# https://docs.python.org/es/3/library/sys.html
+
+# json --> Libreria estandar sin necesidad de installacion
+# https://docs.python.org/es/3/library/json.html
+
+# calendar --> Libreria estandar sin necesidad de installacion
+# https://docs.python.org/es/3/library/calendar.html
+
+# requests = Utilizar --> pip install requests (en el cmd)
+# https://pypi.org/project/requests/
+
+# re --> Libreria estandar sin necesidad de installacion
+# https://docs.python.org/es/3/library/re.html
+
+# datetime --> Libreria estandar sin necesidad de installacion
+# https://docs.python.org/es/3/library/datetime.html
+
+# numpy = Utilizar --> pip install numpy (en el cmd)
+# https://numpy.org/devdocs/user/building.html
+
+# matplotlib.pyplot = Utilizar --> pip install matplotlib (en el cmd)
+# https://pypi.org/project/matplotlib/
+
+#########################
+# EXPLICACION FUNCIONES #
+#########################
+
+# Clean()         -->   Es la encargada de limpiar la informacion impriesa
+#                       anteriormente en pantalla (Linea 14).
+
+# Exit()          -->   Cierra el programa una vez el usuario ya no desea
+#                       continuar usandolo (Linea 21).
+
+# DiasFeriados()  -->   Utilizando una API le muestra al usuario los dias
+#                       feriados para que los tenga en consideracion
+#                       (Linea 25).
+
+# VerCalendario() -->   Permite al usuario visualizar un calendario completo
+#                       o parcial (Linea 62).
+
+# Consulta()      -->   Funcion que permite el retorno al menu principal o
+#                       finalizacion del programa segun corresponda
+#                       (Linea 86).
+
+# Menu()          -->   Encargada de oresentar las diferentes opciones del
+#                       programa al usuario (Linea 100).
+
+# Convert()       -->   Encargada de la extracion de datos de un documento
+#                       de texto (Linea 126).
+
+# Calculadora     -->   Funcion que modifica el calendario señalando los
+#                       dias en el que el usuario viaja (Linea 145).
+
+# Gastos()        -->   Cuenta los dias en los que el usuario viaja y realiza
+#                       el calculo de dinero que los viajes supondran
+#                       (Linea 188).
+
+# Database()      -->   Encargada de almacenar el gasto acumulado de cada mes
+#                       en un documento de texto (Linea 197).
+
+# Grafico()       -->   Tranforma la informacion almacenada en Database.txt
+#                       para luego mostrar un grafico con todos los gastos
+#                        (Linea 210).
