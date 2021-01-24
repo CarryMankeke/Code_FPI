@@ -7,7 +7,10 @@ import re
 from datetime import date
 Error404 = 'Ups.. Parece que te haz equivocado, vamos a intentarlo de nuevo. '
 calendario = []
-current_year = date.today().year
+costo_pasaje = 350
+current_year = 2020  # date.today().year
+# De momento ninguna API de feriados en chile posee una actualizacion para el
+# 2020, por esto, la simulacion sera en el año anterior
 
 
 def Clean():
@@ -46,7 +49,6 @@ def DiasFeriados():
     while i < len(packages_json['data']):
         date.append(packages_json['data'][i]['date'])
         i += 1
-    Clean()
     j = 0
     temp_date = ''
     current_month = [['Enero'], ['Febrero'], ['Marzo'], [
@@ -123,7 +125,7 @@ def ModificarDias():
             while j < len(Nmbr):
                 if Nmbr[j] == entry[i]:
                     temp_month_list = list(temp_month)
-                    if  len(entry[i]) == 1:
+                    if len(entry[i]) == 1:
                         temp_month_list[int(Pos[j])] = 'X'
                         temp_month = ''.join(temp_month_list)
                     elif len(entry[i]) == 2:
@@ -134,11 +136,20 @@ def ModificarDias():
                         j += 1
                 j += 1
             i += 1
-        print(temp_month)
-        Consulta()
+        Gastos(temp_month)
     else:
         print(Error404)
         ModificarDias()
+
+
+def Gastos(mes):
+    print(mes)
+    value = 0
+    for letra in mes:
+        if letra == 'X':
+            value = value + costo_pasaje
+    print('En este mes gastaras : %s pesos' % (value))
+    Consulta()
 
 
 def salir():
@@ -158,5 +169,5 @@ def Consulta():
         print('Ups parace que te haz equivocado')
         Consulta()
 
-
-Menu()
+if __name__ == '__main__':
+    Menu()
