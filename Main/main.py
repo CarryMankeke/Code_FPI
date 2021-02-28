@@ -1,4 +1,8 @@
 # BLOQUE DE DEFINICIÓN
+# DEFINICION DE CONSTANTES
+ERROR404 = 'Ups.. Parece que te haz equivocado, vamos a intentarlo de nuevo. '
+COSTO_PASAJE = 350
+CURRENT_YEAR = 2020  # date.today().year
 # IMPORTACION DE FUNCIONES
 import os
 import sys
@@ -38,7 +42,7 @@ def DiasFeriados():
                     'Septiembre'], ['Octubre'], ['Noviembre'], ['Diciembre']]
     while j < len(date):
         temp_date = date[j].split('-')
-        if int(temp_date[0]) == current_year:
+        if int(temp_date[0]) == CURRENT_YEAR:
             current_month[(int(temp_date[1]) - 1)].append(temp_date[2])
         else:
             j += 1
@@ -64,22 +68,22 @@ def VerCalendario():
     condition = int(input('Deseas ver el año entero o un mes en especifico? '))
     if condition == 1:
         Clean()
-        print(calendar.calendar(current_year))
+        print(calendar.calendar(CURRENT_YEAR))
         Consulta()
     elif condition == 2:
         Clean()
         month = int(input('Que mes quieres visualizar? (1 al 12)'))
         if month <= 12:
             Clean()
-            print(calendar.month(current_year, month))
+            print(calendar.month(CURRENT_YEAR, month))
             Consulta()
         else:
             Clean()
-            print(Error404)
+            print(ERROR404)
             VerCalendario()
     else:
         Clean()
-        print(Error404)
+        print(ERROR404)
         VerCalendario()
 
 
@@ -147,7 +151,7 @@ def Calculadora():
     nombres = []
     i = 0
     while i < len(viajes):
-        temp_month = calendar.month(current_year, i + 1)
+        temp_month = calendar.month(CURRENT_YEAR, i + 1)
         dias = []
         j = 1
         while j < len(viajes[i]):
@@ -189,7 +193,7 @@ def Gastos(mes):
     value = 0
     for letra in mes:
         if letra == 'X':
-            value = value + costo_pasaje
+            value = value + COSTO_PASAJE
     print('En este mes gastaras : %s pesos' % (value))
     return value
 
@@ -223,23 +227,20 @@ def Grafico():
         valores.append(int(temp[i][1]))
         i += 1
     posiciones = np.arange(len(etiquetas))
-    plt.bar(posiciones, valores, alpha=1.0, width=0.5)
+    plt.bar(posiciones, valores, alpha=1.0, width=0.5, color='blueviolet')
     plt.xticks(posiciones, etiquetas)
-    plt.ylabel('Gatos $ (en clp)')
+    plt.xlabel('Meses del año')
+    plt.ylabel('Dinero gastado (en clp)')
     plt.title('Gastos segun cada mes en pasajes')
     plt.show()
-    # Consulta()
+    Consulta()
 
 
 # BLOQUE PRINCIPAL
 # EL PROGRAMA NO TIENE ENTRADA, PUES LA FUNCION ESTA PREDEFINIDA
 viajes = Convert('Viajes.txt')
-Error404 = 'Ups.. Parece que te haz equivocado, vamos a intentarlo de nuevo. '
-calendario = []
-costo_pasaje = 350
-current_year = 2020  # date.today().year
 # De momento ninguna API de feriados en chile posee una actualizacion para el
-# 2020, por esto, la simulacion sera en el año anterior
+# 2021, por esto, la simulacion sera en el año anterior
 if __name__ == '__main__':
     Menu()
 # EL PROGRAMA NO TIENE SALIDA, PUES LA FUNCION ESTA PREDEFINIDA
@@ -289,38 +290,38 @@ if __name__ == '__main__':
 #########################
 
 # Clean()         -->   Es la encargada de limpiar la informacion impriesa
-#                       anteriormente en pantalla (Linea 14).
+#                       anteriormente en pantalla (Linea 18).
 
 # Exit()          -->   Cierra el programa una vez el usuario ya no desea
-#                       continuar usandolo (Linea 21).
+#                       continuar usandolo (Linea 25).
 
 # DiasFeriados()  -->   Utilizando una API le muestra al usuario los dias
 #                       feriados para que los tenga en consideracion
-#                       (Linea 25).
+#                       (Linea 29).
 
 # VerCalendario() -->   Permite al usuario visualizar un calendario completo
-#                       o parcial (Linea 62).
+#                       o parcial (Linea 66).
 
 # Consulta()      -->   Funcion que permite el retorno al menu principal o
 #                       finalizacion del programa segun corresponda
-#                       (Linea 86).
+#                       (Linea 90).
 
 # Menu()          -->   Encargada de oresentar las diferentes opciones del
-#                       programa al usuario (Linea 100).
+#                       programa al usuario (Linea 104).
 
 # Convert()       -->   Encargada de la extracion de datos de un documento
-#                       de texto (Linea 126).
+#                       de texto (Linea 130).
 
 # Calculadora     -->   Funcion que modifica el calendario señalando los
-#                       dias en el que el usuario viaja (Linea 145).
+#                       dias en el que el usuario viaja (Linea 149).
 
 # Gastos()        -->   Cuenta los dias en los que el usuario viaja y realiza
 #                       el calculo de dinero que los viajes supondran
-#                       (Linea 188).
+#                       (Linea 192).
 
 # Database()      -->   Encargada de almacenar el gasto acumulado de cada mes
-#                       en un documento de texto (Linea 197).
+#                       en un documento de texto (Linea 201).
 
 # Grafico()       -->   Tranforma la informacion almacenada en Database.txt
 #                       para luego mostrar un grafico con todos los gastos
-#                        (Linea 210).
+#                        (Linea 214).

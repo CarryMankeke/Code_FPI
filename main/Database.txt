@@ -3,10 +3,10 @@ Febrero 1750
 Marzo 2800
 Abril 3500
 Mayo 2800
-Junio 2800
+Junio 2450
 Julio 2800
-Agosto 2450
+Agosto 2100
 Septiembre 2800
 Octubre 2800
-Noviembre 2800
-Diciembre 2450
+Noviembre 2450
+Diciembre 2100
